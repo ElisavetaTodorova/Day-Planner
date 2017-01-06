@@ -8,9 +8,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by ELISAV on 4.1.2017 г..
- */
+
 public class DateStorage {
 
     public DateStorage() {

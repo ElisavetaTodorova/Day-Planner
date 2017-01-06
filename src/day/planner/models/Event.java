@@ -2,9 +2,7 @@ package day.planner.models;
 
 import day.planner.exceptions.InvalidEventType;
 
-/**
- * Created by ELISAV on 4.1.2017 г..
- */
+
 public class Event {
 
     private String type;
@@ -24,7 +22,7 @@ public class Event {
     }
 
     public void setType(String type) throws InvalidEventType {
-        if (type.equals("date") || type.equals("meeting")) {
+        if (type.equals("date") || type.equals("task")) {
             this.type = type;
         } else {
             throw new InvalidEventType("Type must be date or meeting");

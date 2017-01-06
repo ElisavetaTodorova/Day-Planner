@@ -10,9 +10,7 @@ import java.io.InputStreamReader;
 import java.util.Comparator;
 import java.util.Map;
 
-/**
- * Created by ELISAV on 4.1.2017 г..
- */
+
 public class ProcessManager {
 
     private DateStorage storage;
@@ -44,10 +42,15 @@ public class ProcessManager {
                             + "Private");
 
                     String marker = reader.readLine();
-                    System.out.println("Enter hour and day for the event in format 12D-12H");
+                    System.out.println("Enter hour and day for the event in format 12M-12D-12H");
                     String date = reader.readLine();
 
-                   while (!DateValidator.validate(date)){
+                    while (!DateValidator.validate(date)) {
+                        date = reader.readLine();
+                    }
+
+                    while (this.storage.readEvents().containsKey(date)) {
+                        System.out.println("Event already exists.\r\nPlease enter another date.");
                         date = reader.readLine();
                     }
                     System.out.println("Enter event description:");
@@ -61,9 +64,14 @@ public class ProcessManager {
                     this.addEvent(event);
                     break;
                 case "2":
-                    System.out.println("Enter the date of the event you want to change in format 12H-12D.");
+                    System.out.println("Enter the date of the event you want to change in format 12M-12D-12H.");
                     String dateOfTheEventYouWantToChange = reader.readLine();
-                    while (!DateValidator.validate(dateOfTheEventYouWantToChange)){
+                    while (true) {
+                        System.out.println("Event with that date does not exist.Please enter another date.");
+                        if (DateValidator.validate(dateOfTheEventYouWantToChange)
+                                && this.storage.readEvents().containsKey(dateOfTheEventYouWantToChange)) {
+                            break;
+                        }
                         dateOfTheEventYouWantToChange = reader.readLine();
                     }
                     try {
@@ -73,7 +81,7 @@ public class ProcessManager {
                             invalidEventType.printStackTrace();
                         }
                     } catch (EventDoesNotExist eventDoesNotExist) {
-                        System.out.println("this event does not exist.Please enter another date:");
+                        System.out.println("This event does not exist.Please enter another date:");
                         dateOfTheEventYouWantToChange = reader.readLine();
                         try {
                             this.modifyEvent(dateOfTheEventYouWantToChange);
@@ -99,18 +107,27 @@ public class ProcessManager {
                     }
                     break;
                 case "4":
-                    System.out.println("1.For hour");
-                    System.out.println("2.For whole day");
-                    System.out.println("3.For mount");
-                    System.out.println("Enter your choice using one of the words: hour, day or mount");
+                    System.out.println("1.For hour.");
+                    System.out.println("2.For whole day.");
+                    System.out.println("3.For mount.");
+                    System.out.println("4.All evens.");
+                    System.out.println("Enter your choice by choosing between number 1 to 4.");
                     String choice = reader.readLine();
                     String value = null;
-                    if (choice.equals("hour")) {
-                        System.out.println("Enter hour and day int the format 12D-12H");
-                        value = reader.readLine();
-                    } else if (choice.equals("day")) {
-                        System.out.println("Enter day of mount in the format 12D");
-                        value = reader.readLine();
+                    switch (choice) {
+                        case "1":
+                            System.out.println("Enter hour and day int the format 12M-12D-12H.");
+                            value = reader.readLine();
+                            break;
+                        case "2":
+                            System.out.println("Enter day of mount in the format 12D.");
+                            value = reader.readLine();
+                            break;
+                        case "3":
+                            System.out.println("Enter mount in the format 12M.");
+                            value = reader.readLine();
+                            break;
+
                     }
                     try {
                         this.showCalendar(choice, value);
@@ -140,12 +157,11 @@ public class ProcessManager {
 
     }
 
-    public void modifyEvent(String date) throws EventDoesNotExist, IOException, InvalidEventType {
+    private void modifyEvent(String date) throws EventDoesNotExist, IOException, InvalidEventType {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         Map<String, Event> events = this.storage.readEvents();
         Event event = events.remove(date);
-        Event newEvent = new Event(event.getType(), event.getDate(), event.getMarker(), event.getDescription());
 
         System.out.println("Enter the what about the event you want to change:");
         System.out.println("1.Type");
@@ -192,22 +208,28 @@ public class ProcessManager {
                 event.setDescription(description);
                 break;
         }
-        events.put(event.getDate(),event);
+        events.put(event.getDate(), event);
         this.storage.refreshDB(events);
     }
 
     private void showCalendar(String by, String value) throws EventDoesNotExist {
         switch (by) {
-            case "hour":
+            case "1":
                 System.out.println(this.eventSelector.getEventByHourAndDay(value).toString());
                 break;
-            case "day":
+            case "2":
                 this.eventSelector.getEventsByDay(value)
                         .stream()
                         .sorted(Comparator.comparing(Event::getDate))
                         .forEach(event -> System.out.println(event.toString()));
                 break;
-            case "mount":
+            case "3":
+                this.eventSelector.getEventsByMount(value)
+                        .stream()
+                        .sorted(Comparator.comparing(Event::getDate))
+                        .forEach(event -> System.out.println(event.toString()));
+                break;
+            case "4":
                 this.eventSelector.getAllEvents()
                         .stream()
                         .sorted(Comparator.comparing(Event::getDate))

@@ -6,9 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by ELISAV on 4.1.2017 г..
- */
+
 public class EventSelector {
 
     private DateStorage storage;
@@ -34,7 +32,7 @@ public class EventSelector {
 
         for (String date : events.keySet()) {
             String[] eventDayAndHour = date.split("-");
-            String eventDay = eventDayAndHour[0];
+            String eventDay = eventDayAndHour[1];
             if (eventDay.equals(day)) {
                 result.add(events.get(date));
             }
@@ -44,6 +42,21 @@ public class EventSelector {
 
     }
 
+    public List<Event> getEventsByMount(String mount) {
+        Map<String, Event> events = this.storage.readEvents();
+        List<Event> result = new LinkedList<>();
+
+        for (String date : events.keySet()) {
+            String[] eventDayAndHour = date.split("-");
+            String eventDay = eventDayAndHour[0];
+            if (eventDay.equals(mount)) {
+                result.add(events.get(date));
+            }
+        }
+
+        return result;
+
+    }
     public List<Event> getAllEvents() {
         List<Event> result = new LinkedList<>();
 
