@@ -3,9 +3,9 @@ package day.planner.exceptions;
 /**
  * Created by ELISAV on 5.1.2017 г..
  */
-public class InvalidDate extends Throwable {
+public class InvalidEventType extends Throwable {
 
-    public InvalidDate(String message) {
+    public InvalidEventType(String message) {
         super(message);
     }
 

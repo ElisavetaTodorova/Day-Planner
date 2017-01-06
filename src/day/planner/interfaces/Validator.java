@@ -5,5 +5,5 @@ package day.planner.interfaces;
  */
 public interface Validator {
 
-    boolean validate(String input);
+     boolean validate(String input);
 }

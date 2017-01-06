@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +32,26 @@ public class DateStorage {
         }
 
     }
+
+    public void refreshDB(Map<String,Event> events) {
+            try (FileWriter writer = new FileWriter("resources/info.json",false)) {
+                for (Event event : events.values()) {
+
+                        JsonObject eventAsJSObject = new JsonObject();
+
+                        eventAsJSObject.addProperty("type", event.getType());
+                        eventAsJSObject.addProperty("date", event.getDate());
+                        eventAsJSObject.addProperty("marker", event.getMarker());
+                        eventAsJSObject.addProperty("description", event.getDescription());
+
+                        writer.write(eventAsJSObject.toString() + "\r\n");
+                    }
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
 
     public Map<String, Event> readEvents() {
         Map<String, Event> events = new HashMap<>();
