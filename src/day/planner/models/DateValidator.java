@@ -11,6 +11,6 @@ public class DateValidator{
         int day = Integer.parseInt(hourDayPair[2].substring(0, hourDayPair[2].length() - 1));
 
 
-        return !(day > 31 || day < 0) && !(hour > 24 || hour < 0) && !(mount > 12 || mount < 1);
+        return !(day > 31 || day < 1) && !(hour > 24 || hour < 1) && !(mount > 12 || mount < 1);
     }
 }
