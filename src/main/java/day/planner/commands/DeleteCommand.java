@@ -8,9 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Created by ELISAV on 10.1.2017 г..
- */
 public class DeleteCommand extends Command {
 
 

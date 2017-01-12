@@ -8,9 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Created by ELISAV on 11.1.2017 г..
- */
 public class ViewCommand extends Command {
 
     public ViewCommand(DataStorage storage, ProcessManager manager) {
