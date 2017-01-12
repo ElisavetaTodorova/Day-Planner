@@ -1,7 +1,8 @@
-package day.planner.models;
+package day.planner.events;
 
-import day.planner.exceptions.EventDoesNotExist;
+import day.planner.data.DataStorage;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -9,14 +10,14 @@ import java.util.Map;
 
 public class EventSelector {
 
-    private DateStorage storage;
+    private DataStorage storage;
 
-    public EventSelector(DateStorage storage) {
+    public EventSelector(DataStorage storage) {
         this.storage = storage;
     }
 
     public Event getEventByHourAndDay(String eventDate) throws EventDoesNotExist {
-        Map<String, Event> events = this.storage.readEvents();
+        Map<String, Event> events = this.storage.getAllEvents();
         for (String date : events.keySet()) {
             if (date.equals(eventDate)) {
                 return events.get(eventDate);
@@ -27,7 +28,7 @@ public class EventSelector {
     }
 
     public List<Event> getEventsByDay(String day) {
-        Map<String, Event> events = this.storage.readEvents();
+        Map<String, Event> events = this.storage.getAllEvents();
         List<Event> result = new LinkedList<>();
 
         for (String date : events.keySet()) {
@@ -43,7 +44,7 @@ public class EventSelector {
     }
 
     public List<Event> getEventsByMount(String mount) {
-        Map<String, Event> events = this.storage.readEvents();
+        Map<String, Event> events = this.storage.getAllEvents();
         List<Event> result = new LinkedList<>();
 
         for (String date : events.keySet()) {
@@ -58,9 +59,9 @@ public class EventSelector {
 
     }
     public List<Event> getAllEvents() {
-        List<Event> result = new LinkedList<>();
+        List<Event> result = new ArrayList<>();
 
-        this.storage.readEvents()
+        this.storage.getAllEvents()
                 .entrySet()
                 .forEach(e -> result.add(e.getValue()));
 

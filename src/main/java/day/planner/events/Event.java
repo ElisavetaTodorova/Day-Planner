@@ -1,6 +1,6 @@
-package day.planner.models;
+package day.planner.events;
 
-import day.planner.exceptions.InvalidEventType;
+import day.planner.data.DataValidator;
 
 
 public class Event {
@@ -10,7 +10,7 @@ public class Event {
     private String marker;
     private String description;
 
-    public Event(String type, String date, String marker, String description) throws InvalidEventType {
+    public Event(String type, String date, String marker, String description) throws InvalidEventType, InvalidEventMarker {
         this.setType(type);
         this.setDate(date);
         this.setMarker(marker);
@@ -22,10 +22,8 @@ public class Event {
     }
 
     public void setType(String type) throws InvalidEventType {
-        if (type.equals("date") || type.equals("task")) {
+        if (DataValidator.eventTypeValidate(type)) {
             this.type = type;
-        } else {
-            throw new InvalidEventType("Type must be date or meeting");
         }
     }
 
@@ -35,7 +33,7 @@ public class Event {
 
     public void setDate(String date) {
 
-        if (DateValidator.validate(date)) {
+        if (DataValidator.validateDate(date)) {
             this.date = date;
         }
 
@@ -45,8 +43,8 @@ public class Event {
         return marker;
     }
 
-    public void setMarker(String marker) {
-        if (marker.equals("private") || marker.equals("public") || marker.equals("confidential")) {
+    public void setMarker(String marker) throws InvalidEventMarker {
+        if (DataValidator.eventMarkerValidate(marker)) {
             this.marker = marker;
         }
 
@@ -62,7 +60,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return String.format("|Date: %s | Type: %-7s | Marker: %-13s | Description: %s |",
+        return String.format("|Date: %s | Type: %s | Marker: %s | Description: %s |",
                 this.getDate()
                 , this.getType()
                 , this.getMarker()
@@ -71,12 +69,13 @@ public class Event {
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Event)){
+        if (!(obj instanceof Event)) {
             return false;
         }
 
-        Event event = (Event)obj;
+        Event event = (Event) obj;
         return this.getType().equals(((Event) obj).getType()) && this.getMarker().equals(((Event) obj).getMarker())
-                && this.getDate().equals(((Event) obj).getDate()) && this.getDescription().equals(((Event) obj).getDescription());
+                && this.getDate().equals(((Event) obj).getDate()) && this.getDescription().equals(((Event) obj)
+                .getDescription());
     }
 }

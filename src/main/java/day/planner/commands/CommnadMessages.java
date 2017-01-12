@@ -1,4 +1,4 @@
-package day.planner.enums;
+package day.planner.commands;
 
 
 public enum CommnadMessages {

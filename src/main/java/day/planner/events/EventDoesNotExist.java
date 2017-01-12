@@ -1,4 +1,4 @@
-package day.planner.exceptions;
+package day.planner.events;
 
 
 public class EventDoesNotExist extends Throwable {
