@@ -22,18 +22,16 @@ public class ModifyCommand extends Command {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, EventDoesNotExist {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter the date of the event you want to change in format 12M-12D-12H.");
         String dateOfTheEventYouWantToChange = reader.readLine();
-        while (true) {
-            System.out.println("Event with that date does not exist.Please enter another date.");
-            if (DataValidator.validateDate(dateOfTheEventYouWantToChange)
-                    && super.getStorage().getAllEvents().containsKey(dateOfTheEventYouWantToChange)) {
-                break;
-            }
-            dateOfTheEventYouWantToChange = reader.readLine();
+
+        if (!DataValidator.validateDate(dateOfTheEventYouWantToChange)
+                || !super.getStorage().getAllEvents().containsKey(dateOfTheEventYouWantToChange)) {
+            throw new EventDoesNotExist("Event does not exist!");
         }
+
         try {
 
             super.getManager().modifyEvent(dateOfTheEventYouWantToChange);

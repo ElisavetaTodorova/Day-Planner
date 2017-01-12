@@ -160,15 +160,19 @@ public class ProcessManager {
                 break;
         }
 
-        assert events != null;
+
         Object[][] data = new Object[events.length][];
-        this.getDate(data, events);
-        TextTable textTable = new TextTable(columnNames, data);
-        textTable.printTable();
+        this.getData(data, events);
+        if(events.length > 0) {
+            TextTable textTable = new TextTable(columnNames, data);
+            textTable.printTable();
+        }else {
+            System.out.println("No events!");
+        }
 
     }
 
-    private void getDate(Object[][] data, Event[] events) {
+    private void getData(Object[][] data, Event[] events) {
 
         for (int i = 0; i < events.length; i++) {
             data[i] = new Object[]{

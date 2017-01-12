@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Day Planner" />
+        <module name="Day-planner" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="Day Planner" target="1.8" />
+      <module name="Day-planner" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

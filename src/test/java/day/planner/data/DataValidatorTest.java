@@ -4,9 +4,6 @@ import day.planner.events.InvalidEventType;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * Created by ELISAV on 12.1.2017 г..
- */
 public class DataValidatorTest {
 
     @Test

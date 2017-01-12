@@ -2,9 +2,6 @@ package day.planner.events;
 
 import org.junit.Test;
 
-/**
- * Created by ELISAV on 12.1.2017 г..
- */
 public class EventTest {
 
     @Test(expected = InvalidEventMarker.class)

@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class DataStorage {
 
-    private static Map<String, Event> events;
+    private static Map<String, Event> events = new HashMap<>();
 
     static {
         load();
@@ -21,7 +21,7 @@ public class DataStorage {
 
 
     public DataStorage() {
-        events = new HashMap<>();
+
     }
 
     public void writeEvent(Event event) {
