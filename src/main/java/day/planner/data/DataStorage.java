@@ -34,7 +34,6 @@ public class DataStorage {
             System.out.println(e.getMessage());
         }
 
-        assert file != null;
         try (FileWriter writer = new FileWriter(file, true)) {
             JsonObject eventAsJSObject = new JsonObject();
 
@@ -58,7 +57,6 @@ public class DataStorage {
             System.out.println(e.getMessage());
         }
 
-        assert file != null;
         try (FileWriter writer = new FileWriter(file, false)) {
             for (Event event : events.values()) {
 

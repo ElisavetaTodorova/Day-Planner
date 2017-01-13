@@ -33,7 +33,7 @@ public class Event {
 
     public void setDate(String date) {
 
-        if (DataValidator.validateDate(date)) {
+        if (DataValidator.dateFormatValidate(date) && DataValidator.validateDate(date)) {
             this.date = date;
         }
 
