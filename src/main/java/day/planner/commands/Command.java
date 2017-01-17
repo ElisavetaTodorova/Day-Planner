@@ -1,19 +1,19 @@
 package day.planner.commands;
 
 import day.planner.data.DataStorage;
-import day.planner.engine.ProcessManager;
 import day.planner.events.EventDoesNotExist;
+import day.planner.events.EventSelector;
 
 import java.io.IOException;
 
 public abstract class Command {
 
     private DataStorage storage;
-    private ProcessManager manager;
+    private EventSelector eventSelector;
 
-    protected Command(DataStorage storage, ProcessManager manager) {
+    protected Command(DataStorage storage, EventSelector eventSelector) {
         this.storage = storage;
-        this.manager = manager;
+        this.eventSelector = eventSelector;
     }
 
 
@@ -23,7 +23,7 @@ public abstract class Command {
         return storage;
     }
 
-    protected ProcessManager getManager() {
-        return manager;
+    protected EventSelector getEventSelector() {
+        return eventSelector;
     }
 }

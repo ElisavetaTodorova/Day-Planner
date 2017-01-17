@@ -3,9 +3,9 @@ package day.planner.commands;
 import day.planner.data.DataStorage;
 import day.planner.data.DataValidator;
 import day.planner.events.Event;
+import day.planner.events.EventSelector;
 import day.planner.events.InvalidEventMarker;
 import day.planner.events.InvalidEventType;
-import day.planner.engine.ProcessManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +13,9 @@ import java.io.InputStreamReader;
 
 public class AddCommand extends Command {
 
-    public AddCommand(DataStorage storage, ProcessManager manager) {
-        super(storage, manager);
+
+    public AddCommand(DataStorage storage, EventSelector eventSelector) {
+        super(storage, eventSelector);
     }
 
     @Override
@@ -47,6 +48,11 @@ public class AddCommand extends Command {
         } catch (InvalidEventType | InvalidEventMarker e) {
             System.out.println(e.getMessage());
         }
-        super.getManager().addEvent(event);
+        addEvent(event);
+    }
+
+    private void addEvent(Event event) {
+        this.getStorage().writeEvent(event);
+
     }
 }

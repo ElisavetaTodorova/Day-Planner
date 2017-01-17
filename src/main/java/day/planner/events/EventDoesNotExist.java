@@ -1,14 +1,10 @@
 package day.planner.events;
 
 
-public class EventDoesNotExist extends Throwable {
+public class EventDoesNotExist extends Exception {
 
     public EventDoesNotExist(String message) {
         super(message);
     }
 
-    @Override
-    public String getMessage() {
-        return super.getMessage();
-    }
 }
